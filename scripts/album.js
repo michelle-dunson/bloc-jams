@@ -30,6 +30,21 @@
      ]
  };
 
+var albumDonatello = {
+    title: 'The Shapes',
+    artist: 'Donatello',
+    label: 'Renaissance',
+    year: '1466',
+    albumArtUrl: 'assets/images/album_covers/02.png',
+    songs: [
+        { title: 'Square', duration: '3:43' },
+        { title: 'Circle', duration: '4:15' },
+        { title: 'Triangle', duration: '2:36' },
+        { title: 'Rectangle', duration: '3:12' },
+        { title: 'Rhombus', duration: '3:22' }
+    ]
+};
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -42,29 +57,35 @@
      return template;
  };
 
- var setCurrentAlbum = function(album) {
-     // #1
-     var albumTitle = document.getElementsByClassName('album-view-title')[0];
-     var albumArtist = document.getElementsByClassName('album-view-artist')[0];
-     var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
-     var albumImage = document.getElementsByClassName('album-cover-art')[0];
-     var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
+ var albumTitle = document.getElementsByClassName('album-view-title')[0];
+ var albumArtist = document.getElementsByClassName('album-view-artist')[0];
+ var albumReleaseInfo = document.getElementsByClassName('album-view-release-info')[0];
+ var albumImage = document.getElementsByClassName('album-cover-art')[0];
+ var albumSongList = document.getElementsByClassName('album-view-song-list')[0];
 
-     // #2
+ var setCurrentAlbum = function(album) {
      albumTitle.firstChild.nodeValue = album.title;
      albumArtist.firstChild.nodeValue = album.artist;
      albumReleaseInfo.firstChild.nodeValue = album.year + ' ' + album.label;
      albumImage.setAttribute('src', album.albumArtUrl);
 
-     // #3
      albumSongList.innerHTML = '';
 
-     // #4
      for (var i = 0; i < album.songs.length; i++) {
          albumSongList.innerHTML += createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
      }
  };
 
- window.onload = function() {
-     setCurrentAlbum(albumPicasso);
+window.onload = function() {
+    setCurrentAlbum(albumPicasso);
+
+    var albums = [albumPicasso, albumMarconi, albumDonatello];
+    var i = 1;
+    albumImage.addEventListener('click', function(event) {
+      setCurrentAlbum(albums[i]);
+      i++;
+      if (i == albums.length) {
+        i = 0;
+      }
+    });
  };
