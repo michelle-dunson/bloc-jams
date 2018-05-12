@@ -77,7 +77,22 @@ var albumDonatello = {
  };
 
 var findParentByClassName = function(element, targetClass) {
-    if (element) {
+    var elementsWithClass = document.getElementsByClassName(targetClass);
+    var index = 0;
+    var found = false;
+
+    while(index<elementsWithClass.length && !found) {
+        if (elementsWithClass[index].contains(element)) {
+            found = true;
+        }
+        index++;
+    }
+
+    if (!element.parentElement) {
+       console.log("No parent found.");
+    } else if (found === false) {
+       console.log("No parent found with that class name.");
+    } else if (element) {
         var currentParent = element.parentElement;
         while (currentParent.className !== targetClass && currentParent.className !== null) {
             currentParent = currentParent.parentElement;
