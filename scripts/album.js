@@ -168,6 +168,6 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
-    $previousButton.on('click', changeSong('previous'));
-    $nextButton.on('click', changeSong('next'));
+    $(previousButton).on('click', changeSong('previous'));
+    $(nextButton).on('click', changeSong('next'));
 });
