@@ -90,7 +90,34 @@ var updatePlayerBarSong = function() {
      $('.main-controls .play-pause').html(playerBarPauseButton);
 };
 
-var nextSong = function() {
+var changeSong = function() {
+    var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
+    if ($('.next').click) {
+          currentSongIndex++;
+          if (currentSongIndex >= currentAlbum.songs.length) {
+                currentSongIndex = 0;
+          }
+      } else if ($('.previous').click) {
+          currentSongIndex--;
+          if (currentSongIndex < 0) {
+                currentSongIndex = currentAlbum.songs.length - 1;
+          }
+      }
+
+    var lastSongNumber = currentlyPlayingSongNumber;
+
+    setSong(currentSongIndex + 1);
+    updatePlayerBarSong();
+
+    var $nextSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $previousSongNumberCell = getSongNumberCell(currentlyPlayingSongNumber);
+    var $lastSongNumberCell = getSongNumberCell(lastSongNumber);
+    $nextSongNumberCell.html(playerBarPauseButton);
+    $previousSongNumberCell.html(playerBarPauseButton);
+    $lastSongNumberCell.html(lastSongNumber);
+};
+
+/*var nextSong = function() {
     var currentSongIndex = trackIndex(currentAlbum, currentSongFromAlbum);
     currentSongIndex++;
 
@@ -129,10 +156,10 @@ var previousSong = function() {
 
     $previousSongNumberCell.html(playerBarPauseButton);
     $lastSongNumberCell.html(lastSongNumber);
-};
+};*/
 
-var playerBarPlayButton = '<span class="ion-play"></span>';
-var playerBarPauseButton = '<span class="ion-pause"></span>';
+var playerBarPlayButton = '<span class="ion-play album-song-button"></span>';
+var playerBarPauseButton = '<span class="ion-pause album-song-button"></span>';
 var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
@@ -141,6 +168,6 @@ var $nextButton = $('.main-controls .next');
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
-    $previousButton.click(previousSong);
-    $nextButton.click(nextSong);
+    $previousButton.click(changeSong);
+    $nextButton.click(changeSong);
 });
